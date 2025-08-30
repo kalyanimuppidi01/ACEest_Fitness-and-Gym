@@ -1,125 +1,151 @@
-# ACEst Fitness & Gym
+🏋️ ACEst Fitness & Gym – DevOps Assignment
 
-This project is a **Flask web application** for ACEst Fitness & Gym.
-It demonstrates **Flask development, version control with Git/GitHub, automated testing with Pytest, containerization with Docker, and CI/CD with GitHub Actions**.
+This project is a Flask web application for ACEst Fitness & Gym, built as part of a DevOps assignment.
+It demonstrates Flask development, version control with Git/GitHub, automated testing with Pytest, containerization with Docker, and a CI/CD pipeline with GitHub Actions + GitHub Container Registry (GHCR).
 
----
+🚀 Features
 
-## 🚀 Features
+Flask web application with gym management features:
 
-* Flask web application with sample routes:
+/ → Welcome page
 
-  * `/` → Welcome page
-  * `/members` → JSON response with sample members
-* Unit tests with **Pytest**
-* Dockerized application for portability
-* GitHub Actions CI/CD pipeline:
+/members → list of members
 
-  * Runs tests automatically on push/pull request
-  * Builds Docker image if tests pass
+/membership/<id> → details of a specific member
 
----
+/workouts → list of workout plans
 
-## 📂 Project Structure
+/trainers → list of trainers
 
-```
+/classes → fitness class schedule
+
+/bmi?weight=70&height=1.75 → BMI calculator
+
+JWT Authentication:
+
+/login → login with credentials to get JWT token
+
+/protected → secured endpoint, requires valid token
+
+Unit tests with Pytest (positive + negative cases)
+
+Dockerized for portability
+
+GitHub Actions CI/CD pipeline:
+
+Runs tests automatically
+
+Builds & publishes Docker image to GHCR
+
+📂 Project Structure
 ACEst-Fitness/
 │── app.py                 # Flask application
 │── requirements.txt       # Dependencies
 │── tests/
 │    ├── __init__.py
-│    └── test_app.py       # Pytest test cases
+│    ├── test_app.py       # API tests
+│    └── test_auth.py      # JWT tests
 │── Dockerfile             # Containerization
 │── .github/
 │    └── workflows/
 │        └── main.yml      # CI/CD pipeline
-│── README.md              # Project documentation
-```
+│── README.md              # Documentation
 
----
-
-## ⚙️ Setup & Run Locally
-
-### 1. Clone Repository
-
-```bash
+⚙️ Run Locally
+1. Clone Repo
 git clone https://github.com/kalyanimuppidi01/ACEest_Fitness-and-Gym.git
-```
+cd ACEst-Fitness
 
-### 2. Create Virtual Environment
-
-```bash
+2. Virtual Environment
 python3 -m venv venv
 source venv/bin/activate
-```
 
-### 3. Install Dependencies
-
-```bash
+3. Install Dependencies
 pip install -r requirements.txt
-```
 
-### 4. Run Flask App
-
-```bash
+4. Run Flask App
 python app.py
-```
 
-App runs at 👉 [http://localhost:5000](http://localhost:5000)
 
----
+App runs at 👉 http://localhost:5000
 
-## 🧪 Running Tests
+🧪 Run Tests
 
 Run all Pytest test cases:
 
-```bash
 pytest -v
-```
 
----
 
-## 🐳 Running with Docker
+Tests include:
 
-### 1. Build Image
+Members, workouts, trainers, classes
 
-```bash
+Valid & invalid member lookup
+
+BMI calculator (valid & invalid inputs)
+
+JWT authentication (login success, login failure, protected access)
+
+🐳 Run with Docker
+Build Image Locally
 docker build -t aceest-fitness .
-```
-
-### 2. Run Container
-
-```bash
 docker run -p 5000:5000 aceest-fitness
-```
 
-Open [http://localhost:5000](http://localhost:5000)
 
----
+Open 👉 http://localhost:5000
 
-## ⚡ CI/CD with GitHub Actions
+📦 Run from GitHub Container Registry (GHCR)
 
-* Workflow file: `.github/workflows/main.yml`
-* Trigger: Runs automatically on every `push` and `pull_request`
-* Pipeline Steps:
+This repo is set up with GitHub Actions to automatically build and publish a Docker image.
 
-  1. Check out repository
-  2. Set up Python
-  3. Install dependencies
-  4. Run tests with Pytest
-  5. Build Docker image (only if tests pass)
+Pull the Latest Image
+docker pull ghcr.io/<your-username>/acest-fitness:latest
 
-You can see pipeline runs under the **Actions** tab of this repo.
+Run the Container
+docker run -p 5000:5000 ghcr.io/<your-username>/acest-fitness:latest
 
----
+🔐 JWT Authentication
+1. Login to Get Token
+curl -X POST http://localhost:5000/login \
+     -H "Content-Type: application/json" \
+     -d '{"username":"admin","password":"admin"}'
 
-## 📌 Deliverables
 
-* Flask app (`app.py`)
-* Tests (`tests/test_app.py`)
-* `requirements.txt`
-* `Dockerfile`
-* GitHub Actions workflow (`main.yml`)
-* This `README.md`
+Response:
 
----
+{"access_token": "<your.jwt.token>"}
+
+2. Access Protected Route
+curl http://localhost:5000/protected \
+     -H "Authorization: Bearer <your.jwt.token>"
+
+
+Response:
+
+{"message": "Hello, admin. You are authorized!"}
+
+⚡ CI/CD Pipeline (GitHub Actions)
+
+Triggered on every push/PR to main
+
+Jobs:
+
+Build & Test → installs dependencies + runs pytest
+
+Docker Build & Push → builds and publishes Docker image to GHCR
+
+You can view runs under the Actions tab of this repo.
+
+📌 Deliverables
+
+✅ Flask app with multiple gym endpoints
+
+✅ Unit tests (API + JWT)
+
+✅ Dockerfile
+
+✅ GitHub Actions pipeline
+
+✅ README.md with full documentation
+
+✅ Published Docker image on GHCR
