@@ -1,6 +1,6 @@
-# 🏋️ ACEst Fitness & Gym – DevOps Assignment
+# 🏋️ ACEst Fitness & Gym
 
-This project is a **Flask web application** for ACEst Fitness & Gym, built as part of a DevOps assignment.
+This project is a **Flask web application** for ACEst Fitness & Gym.
 It demonstrates **Flask development, version control with Git/GitHub, automated testing with Pytest, containerization with Docker, and a CI/CD pipeline with GitHub Actions + GitHub Container Registry (GHCR)**.
 
 ---
@@ -16,12 +16,16 @@ It demonstrates **Flask development, version control with Git/GitHub, automated 
   * `/trainers` → list of trainers
   * `/classes` → fitness class schedule
   * `/bmi?weight=70&height=1.75` → BMI calculator
+
 * **JWT Authentication**:
 
   * `/login` → login with credentials to get JWT token
   * `/protected` → secured endpoint, requires valid token
+
 * Unit tests with **Pytest** (positive + negative cases)
+
 * Dockerized for portability
+
 * GitHub Actions CI/CD pipeline:
 
   * Runs tests automatically
@@ -161,21 +165,55 @@ Response:
 
 ## ⚡ CI/CD Pipeline (GitHub Actions)
 
-* Triggered on every push/PR to `main`
-* Jobs:
+This project uses **GitHub Actions** for automated CI/CD.
 
-  1. **Build & Test** → installs dependencies + runs pytest
-  2. **Docker Build & Push** → builds and publishes Docker image to GHCR
+### 🔄 Workflow Overview
 
-You can view runs under the **Actions** tab of this repo.
+The pipeline (`.github/workflows/main.yml`) runs on every **push** and **pull request** to `main`.
+
+It has two stages:
+
+1. **Build & Test (CI)**
+
+   * Checkout code
+   * Set up Python 3.10
+   * Install dependencies
+   * Run all tests with `pytest`
+
+2. **Docker Build & Push (CD)**
+
+   * Runs only if tests pass
+   * Logs into **GHCR** using a Personal Access Token (PAT)
+   * Builds Docker image for the app
+   * Pushes to GHCR as:
+
+     ```
+     ghcr.io/kalyanimuppidi01/acest-fitness:latest
+     ```
 
 ---
 
-## 📌 Deliverables
+### 📊 Pipeline Flow
 
-* ✅ Flask app with multiple gym endpoints
-* ✅ Unit tests (API + JWT)
-* ✅ Dockerfile
-* ✅ GitHub Actions pipeline
-* ✅ README.md with full documentation
-* ✅ Published Docker image on GHCR
+```mermaid
+flowchart TD
+    A[Push / PR to main] --> B[CI: Build & Test]
+    B -->|All tests pass| C[CD: Build Docker Image]
+    C --> D[Push Image to GHCR]
+    D --> E[Deploy/Run Container Anywhere]
+```
+
+---
+
+### ✅ Benefits
+
+* Ensures **code correctness** before packaging
+* Guarantees **consistent container builds**
+* Provides an **always-available Docker image** for deployment
+* Secure authentication via **GitHub Actions secrets**
+
+---
+
+👉 This CI/CD pipeline makes the project **production-ready** and demonstrates end-to-end DevOps practices.
+
+---
