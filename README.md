@@ -117,13 +117,13 @@ This repo is set up with **GitHub Actions** to automatically build and publish a
 ### Pull the Latest Image
 
 ```bash
-docker pull ghcr.io/<your-username>/acest-fitness:latest
+docker pull ghcr.io/kalyanimuppidi01/acest-fitness:latest
 ```
 
 ### Run the Container
 
 ```bash
-docker run -p 5000:5000 ghcr.io/<your-username>/acest-fitness:latest
+docker run -p 5000:5000 ghcr.io/kalyanimuppidi01/acest-fitness:latest
 ```
 
 ---
