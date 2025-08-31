@@ -9,7 +9,8 @@ def client():
 def test_home(client):
     response = client.get("/")
     assert response.status_code == 200
-    assert b"Welcome to ACEst Fitness & Gym API" in response.data
+    # check if HTML page contains expected heading
+    assert b"ACEst Fitness & Gym" in response.data
 
 def test_members(client):
     response = client.get("/members")

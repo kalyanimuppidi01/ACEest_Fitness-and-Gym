@@ -3,13 +3,15 @@
 This project is a **Flask web application** for ACEst Fitness & Gym.
 It demonstrates **Flask development, version control with Git/GitHub, automated testing with Pytest, containerization with Docker, and a CI/CD pipeline with GitHub Actions + GitHub Container Registry (GHCR)**.
 
+It also includes a **realistic HTML landing page (index.html)** to make the app look like a professional gym website.
+
 ---
 
 ## 🚀 Features
 
 * Flask web application with **gym management features**:
 
-  * `/` → Welcome page
+  * `/` → Realistic homepage (HTML UI with hero banner, sections, navigation)
   * `/members` → list of members
   * `/membership/<id>` → details of a specific member
   * `/workouts` → list of workout plans
@@ -21,6 +23,12 @@ It demonstrates **Flask development, version control with Git/GitHub, automated 
 
   * `/login` → login with credentials to get JWT token
   * `/protected` → secured endpoint, requires valid token
+
+* **Modern UI**:
+
+  * Realistic landing page (`templates/index.html`) with sections for workouts, yoga, cardio
+  * Navigation bar linking to API routes
+  * Hero banner with call-to-action
 
 * Unit tests with **Pytest** (positive + negative cases)
 
@@ -39,6 +47,8 @@ It demonstrates **Flask development, version control with Git/GitHub, automated 
 ACEst-Fitness/
 │── app.py                 # Flask application
 │── requirements.txt       # Dependencies
+│── templates/
+│    └── index.html        # Realistic Gym UI
 │── tests/
 │    ├── __init__.py
 │    ├── test_app.py       # API tests
@@ -81,12 +91,11 @@ python app.py
 ```
 
 App runs at 👉 [http://localhost:5000](http://localhost:5000)
+The homepage displays a **modern fitness landing page**.
 
 ---
 
 ## 🧪 Run Tests
-
-Run all Pytest test cases:
 
 ```bash
 pytest -v
@@ -211,9 +220,5 @@ flowchart TD
 * Guarantees **consistent container builds**
 * Provides an **always-available Docker image** for deployment
 * Secure authentication via **GitHub Actions secrets**
-
----
-
-👉 This CI/CD pipeline makes the project **production-ready** and demonstrates end-to-end DevOps practices.
 
 ---
