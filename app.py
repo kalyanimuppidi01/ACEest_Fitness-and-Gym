@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 app = Flask(__name__)
@@ -33,7 +33,7 @@ classes = [
 
 @app.route("/")
 def home():
-    return "🏋️‍♀️ Welcome to ACEst Fitness & Gym API!"
+    return render_template("index.html")
 
 @app.route("/members")
 def get_members():
