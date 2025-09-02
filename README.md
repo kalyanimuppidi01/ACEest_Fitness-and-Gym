@@ -1,15 +1,22 @@
 # 🏋️ ACEst Fitness & Gym
 
-This project is a **Flask web application** for ACEst Fitness & Gym.
-It demonstrates **Flask development, version control with Git/GitHub, automated testing with Pytest, containerization with Docker, and a CI/CD pipeline with GitHub Actions + GitHub Container Registry (GHCR)**.
+This project is a **Flask + Tkinter Python application** for ACEst Fitness & Gym.
+It demonstrates:
 
-It also includes a **realistic HTML landing page (index.html)** to make the app look like a professional gym website.
+* **Flask development** for REST APIs
+* **Tkinter GUI** for a desktop workout tracker
+* **Version control** with Git/GitHub
+* **Automated testing** with Pytest
+* **Containerization** with Docker
+* **CI/CD pipeline** using GitHub Actions + GitHub Container Registry (GHCR)
+
+It also includes a **realistic HTML landing page (index.html)** to make the web app look like a professional gym website.
 
 ---
 
 ## 🚀 Features
 
-* Flask web application with **gym management features**:
+* Flask web application with **gym management APIs**:
 
   * `/` → Realistic homepage (HTML UI with hero banner, sections, navigation)
   * `/members` → list of members
@@ -30,6 +37,12 @@ It also includes a **realistic HTML landing page (index.html)** to make the app 
   * Navigation bar linking to API routes
   * Hero banner with call-to-action
 
+* **Tkinter Desktop App**:
+
+  * Integrated into `app.py`
+  * Lets users log workouts (name + duration)
+  * View all logged workouts in a popup window
+
 * Unit tests with **Pytest** (positive + negative cases)
 
 * Dockerized for portability
@@ -45,15 +58,14 @@ It also includes a **realistic HTML landing page (index.html)** to make the app 
 
 ```
 ACEst-Fitness/
-│── app.py                 # Flask application
+│── app.py                 # Flask + Tkinter combined application
 │── requirements.txt       # Dependencies
 │── templates/
-│    └── index.html        # Realistic Gym UI
+│    └── index.html        # Realistic Gym UI (Flask homepage)
 │── tests/
 │    ├── __init__.py
-│    ├── test_app.py       # API tests
-│    └── test_auth.py      # JWT tests
-│── Dockerfile             # Containerization
+│    ├── test_app.py       # API + JWT tests
+│── Dockerfile             # Containerization (runs Flask only)
 │── .github/
 │    └── workflows/
 │        └── main.yml      # CI/CD pipeline
@@ -84,14 +96,24 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Run Flask App
+### 4. Run the Application
 
 ```bash
 python app.py
 ```
 
-App runs at 👉 [http://localhost:5000](http://localhost:5000)
-The homepage displays a **modern fitness landing page**.
+This will:
+
+* Start the **Flask API** at 👉 [http://localhost:5000](http://localhost:5000)
+* Open the **Tkinter Desktop App** window for workout tracking
+
+---
+
+## 🖥️ Tkinter GUI Usage
+
+* Enter a workout name (e.g., `"Cardio"`) and duration (`30`).
+* Click **Add Workout** → saved in memory.
+* Click **View Workouts** → popup shows all logged workouts.
 
 ---
 
@@ -110,7 +132,7 @@ Tests include:
 
 ---
 
-## 🐳 Run with Docker
+## 🐳 Run with Docker (Flask only)
 
 ### Build Image Locally
 
@@ -120,6 +142,8 @@ docker run -p 5000:5000 aceest-fitness
 ```
 
 Open 👉 [http://localhost:5000](http://localhost:5000)
+
+⚠️ **Note**: Tkinter GUI is **not included** inside Docker (since Docker containers don’t support desktop windows). Run `python app.py` locally to use Tkinter.
 
 ---
 
