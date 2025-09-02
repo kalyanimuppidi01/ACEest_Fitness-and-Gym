@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy requirements.txt first (better for caching)
 COPY requirements.txt .
 
+ENV DOCKER_ENV=1
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 

@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request, render_template
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-import tkinter as tk
-from tkinter import messagebox
 import threading
+import os
+
+if not os.environ.get("DOCKER_ENV"):
+    import tkinter as tk
+    from tkinter import messagebox
 
 # -------------------- Flask Web App -------------------- #
 app = Flask(__name__)
@@ -147,6 +150,11 @@ def run_tkinter():
     root.mainloop()
 
 if __name__ == "__main__":
-    # Run Flask in a separate thread so Tkinter doesn't block
-    threading.Thread(target=run_flask, daemon=True).start()
-    run_tkinter()
+    if os.environ.get("DOCKER_ENV"):
+        # In Docker: run only Flask
+        run_flask()
+    else:
+        # Locally: run Flask + Tkinter together
+        threading.Thread(target=run_flask, daemon=True).start()
+        run_tkinter()
+
