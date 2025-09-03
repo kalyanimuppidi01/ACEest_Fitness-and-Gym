@@ -42,14 +42,18 @@ It also includes a **realistic HTML landing page (index.html)** to make the web 
   * Integrated into `app.py`
   * Lets users log workouts (name + duration)
   * View all logged workouts in a popup window
+  * Skipped automatically inside Docker (via `DOCKER_ENV`)
 
-* Unit tests with **Pytest** (positive + negative cases)
+* **Automated Tests with Pytest**:
 
-* Dockerized for portability
+  * API endpoints (valid + invalid cases)
+  * BMI calculator
+  * JWT authentication flow
+  * ✅ Tests also run **inside Docker builds** – if any test fails, the build fails
 
-* GitHub Actions CI/CD pipeline:
+* **CI/CD pipeline with GitHub Actions**:
 
-  * Runs tests automatically
+  * Runs tests automatically on every push/PR
   * Builds & publishes Docker image to **GHCR**
 
 ---
@@ -65,7 +69,7 @@ ACEst-Fitness/
 │── tests/
 │    ├── __init__.py
 │    ├── test_app.py       # API + JWT tests
-│── Dockerfile             # Containerization (runs Flask only)
+│── Dockerfile             # Containerization (runs Flask only in Docker)
 │── .github/
 │    └── workflows/
 │        └── main.yml      # CI/CD pipeline
@@ -115,15 +119,19 @@ This will:
 * Click **Add Workout** → saved in memory.
 * Click **View Workouts** → popup shows all logged workouts.
 
+⚠️ Tkinter GUI runs only locally, **not inside Docker**.
+
 ---
 
 ## 🧪 Run Tests
+
+Run tests locally:
 
 ```bash
 pytest -v
 ```
 
-Tests include:
+✔️ Tests include:
 
 * Members, workouts, trainers, classes
 * Valid & invalid member lookup
@@ -138,12 +146,23 @@ Tests include:
 
 ```bash
 docker build -t aceest-fitness .
+```
+
+During build:
+
+* Dependencies are installed
+* ✅ **Pytest is executed automatically inside Docker**
+* If any test fails → build fails
+
+### Run the Container
+
+```bash
 docker run -p 5000:5000 aceest-fitness
 ```
 
 Open 👉 [http://localhost:5000](http://localhost:5000)
 
-⚠️ **Note**: Tkinter GUI is **not included** inside Docker (since Docker containers don’t support desktop windows). Run `python app.py` locally to use Tkinter.
+⚠️ Tkinter is skipped inside Docker (`DOCKER_ENV=1`).
 
 ---
 
@@ -211,14 +230,13 @@ It has two stages:
    * Checkout code
    * Set up Python 3.10
    * Install dependencies
-   * Run all tests with `pytest`
+   * Run all tests with `pytest` (again inside CI)
 
 2. **Docker Build & Push (CD)**
 
    * Runs only if tests pass
-   * Logs into **GHCR** using a Personal Access Token (PAT)
-   * Builds Docker image for the app
-   * Pushes to GHCR as:
+   * Builds Docker image (which itself re-runs pytest inside)
+   * Pushes image to GHCR as:
 
      ```
      ghcr.io/kalyanimuppidi01/acest-fitness:latest
@@ -230,8 +248,8 @@ It has two stages:
 
 ```mermaid
 flowchart TD
-    A[Push / PR to main] --> B[CI: Build & Test]
-    B -->|All tests pass| C[CD: Build Docker Image]
+    A[Push / PR to main] --> B[CI: Run Pytest in Actions]
+    B -->|All tests pass| C[CD: Docker Build (with pytest inside)]
     C --> D[Push Image to GHCR]
     D --> E[Deploy/Run Container Anywhere]
 ```
@@ -244,5 +262,9 @@ flowchart TD
 * Guarantees **consistent container builds**
 * Provides an **always-available Docker image** for deployment
 * Secure authentication via **GitHub Actions secrets**
+* Double safety:
+
+  * Tests run in GitHub Actions (CI)
+  * Tests also run inside Docker build
 
 ---

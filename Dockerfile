@@ -15,6 +15,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy rest of the project files
 COPY . .
 
+# Run unit tests during build
+RUN pytest --maxfail=1 --disable-warnings -q
+
 # Expose port 5000 for Flask
 EXPOSE 5000
 
