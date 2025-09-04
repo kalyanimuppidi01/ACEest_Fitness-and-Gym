@@ -249,9 +249,9 @@ It has two stages:
 ```mermaid
 flowchart TD
     A[Push / PR to main] --> B[CI: Run Pytest in Actions]
-    B -->|All tests pass| C[CD: Docker Build (with pytest inside)]
+    B -->|All tests pass| C[CD: Docker Build with pytest inside]
     C --> D[Push Image to GHCR]
-    D --> E[Deploy/Run Container Anywhere]
+    D --> E[Deploy and Run Container Anywhere]
 ```
 
 ---
