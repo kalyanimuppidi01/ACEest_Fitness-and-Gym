@@ -1,4 +1,4 @@
-# 🏋️ ACEst Fitness & Gym
+# ACEst Fitness & Gym
 
 This project is a **Flask + Tkinter Python application** for ACEst Fitness & Gym.
 It demonstrates:
@@ -14,7 +14,7 @@ It also includes a **realistic HTML landing page (index.html)** to make the web 
 
 ---
 
-## 🚀 Features
+## Features
 
 * Flask web application with **gym management APIs**:
 
@@ -113,7 +113,7 @@ This will:
 
 ---
 
-## 🖥️ Tkinter GUI Usage
+## Tkinter GUI Usage
 
 * Enter a workout name (e.g., `"Cardio"`) and duration (`30`).
 * Click **Add Workout** → saved in memory.
@@ -244,19 +244,18 @@ It has two stages:
 
 ---
 
-### 📊 Pipeline Flow
+### Pipeline Flow
 
 ```mermaid
 flowchart TD
     A[Push / PR to main] --> B[CI: Run Pytest in Actions]
-    B -->|All tests pass| C[CD: Docker Build (with pytest inside)]
+    B -->|All tests pass| C[CD: Docker Build with pytest inside]
     C --> D[Push Image to GHCR]
-    D --> E[Deploy/Run Container Anywhere]
-```
+    D --> E[Deploy and Run Container Anywhere]
 
 ---
 
-### ✅ Benefits
+### Benefits
 
 * Ensures **code correctness** before packaging
 * Guarantees **consistent container builds**
